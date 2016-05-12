@@ -2,8 +2,29 @@ require 'spec_helper'
 
 RSpec.describe Bernard do
   describe '#publish' do
-    it 'publishes an event to keen.io' do
+    it 'publishes an event' do
+      bernard = Bernard.new
+      allow(bernard).to receive(:project_id).and_return('1234')
+      allow(bernard).to receive(:write_key).and_return('WRITE_KEY')
+      stub_request(:post, 'https://api.keen.io/projects/1234/events/foo')
 
+      bernard.publish(:foo, count: 1)
+
+      expect(WebMock).to have_requested(:post, 'https://api.keen.io/projects/1234/events/foo')
+    end
+
+    it 'sets the correct HTTP headers on the request' do
+      bernard = Bernard.new
+      allow(bernard).to receive(:project_id).and_return('1234')
+      allow(bernard).to receive(:write_key).and_return('WRITE_KEY')
+      stub_request(:post, 'https://api.keen.io/projects/1234/events/bar')
+
+      bernard.publish(:bar, count: 1)
+
+      expect(WebMock)
+        .to have_requested(:post, 'https://api.keen.io/projects/1234/events/bar')
+        .with(headers: { 'Content-Type' => 'application/json',
+                         'Authorization' => 'WRITE_KEY' })
     end
   end
 

@@ -17,9 +17,8 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(spec|features)/}) }
 
-  gem.add_dependency 'curb'
-
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'pry'
+  gem.add_development_dependency 'webmock'
 end

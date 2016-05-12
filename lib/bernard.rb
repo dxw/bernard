@@ -3,7 +3,8 @@ require 'bernard/schema'
 require 'bernard/version'
 
 require 'json'
-require 'curb'
+require 'net/https'
+require 'uri'
 
 class Bernard
   BASE_URI = 'https://api.keen.io/3.0'
@@ -25,16 +26,21 @@ class Bernard
   end
 
   def publish(schema, metadata)
-    schema = String(schema).strip
-    uri = "#{BASE_URI}/projects/#{project_id}/events/#{schema}"
+    schema = String(schema).strip.downcase
 
-    request = Curl.post(uri) do |r|
-      r.headers['Authorization'] = write_key
-      r.headers['Content-Type'] = 'application/json'
+    uri = URI.parse(BASE_URI)
 
-      r.body_str = JSON.encode(metadata)
-    end
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.open_timeout = 5
+    http.read_timeout = 5
+    http.use_ssl = true
 
-    request.response_code == '200'
+    request = Net::HTTP::Post.new("/projects/#{project_id}/events/#{schema}")
+    request['Authorization'] = write_key
+    request['Content-Type'] = 'application/json'
+    request.body = metadata.to_json
+
+    response = http.request(request)
+    response.code == '200'
   end
 end
