@@ -41,13 +41,13 @@ RSpec.describe Bernard do
     it 'publishes a simple event' do
       bernard = Bernard.new
       allow(bernard).to receive(:project_id).and_return('1234')
-      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/on_fire')
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/tick')
 
       bernard.tick(:on_fire)
 
       expect(WebMock)
-        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/on_fire')
-        .with(body: { count: 1 })
+        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/tick')
+        .with(body: { type: 'on_fire', count: 1 })
     end
   end
 
@@ -55,13 +55,13 @@ RSpec.describe Bernard do
     it 'publishes a simple gauge event' do
       bernard = Bernard.new
       allow(bernard).to receive(:project_id).and_return('1234')
-      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/room_temperature')
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/gauge')
 
       bernard.gauge(:room_temperature, 42.1)
 
       expect(WebMock)
-        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/room_temperature')
-        .with(body: { value: 42.1 })
+        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/gauge')
+        .with(body: { type: 'room_temperature', value: 42.1 })
     end
   end
 

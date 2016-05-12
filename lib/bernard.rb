@@ -50,10 +50,10 @@ class Bernard
   end
 
   def tick(event)
-    publish(event, count: 1)
+    publish(:tick, type: event, count: 1)
   end
 
   def gauge(event, value)
-    publish(event, value: Float(value))
+    publish(:gauge, type: event, value: Float(value))
   end
 end
