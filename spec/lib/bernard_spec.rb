@@ -37,6 +37,34 @@ RSpec.describe Bernard do
     end
   end
 
+  describe '#tick' do
+    it 'publishes a simple event' do
+      bernard = Bernard.new
+      allow(bernard).to receive(:project_id).and_return('1234')
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/on_fire')
+
+      bernard.tick(:on_fire)
+
+      expect(WebMock)
+        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/on_fire')
+        .with(body: { count: 1 })
+    end
+  end
+
+  describe '#gauge' do
+    it 'publishes a simple gauge event' do
+      bernard = Bernard.new
+      allow(bernard).to receive(:project_id).and_return('1234')
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/room_temperature')
+
+      bernard.gauge(:room_temperature, 42.1)
+
+      expect(WebMock)
+        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/room_temperature')
+        .with(body: { value: 42.1 })
+    end
+  end
+
   describe '#write_key=' do
     it 'sets write_key with the passed in value' do
       valid_key = 'a' * 192

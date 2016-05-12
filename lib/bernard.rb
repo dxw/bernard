@@ -25,8 +25,8 @@ class Bernard
     @write_key = write_key
   end
 
-  def publish(schema, metadata)
-    schema = String(schema).strip.downcase
+  def publish(event, metadata)
+    event = String(event).strip.downcase
 
     uri = URI.parse(BASE_URI)
 
@@ -35,7 +35,7 @@ class Bernard
     http.read_timeout = 5
     http.use_ssl = true
 
-    request = Net::HTTP::Post.new("/3.0/projects/#{project_id}/events/#{schema}")
+    request = Net::HTTP::Post.new("/3.0/projects/#{project_id}/events/#{event}")
     request['Authorization'] = write_key
     request['Content-Type'] = 'application/json'
     request.body = metadata.to_json
@@ -47,5 +47,13 @@ class Bernard
     end
 
     response.code == '201'
+  end
+
+  def tick(event)
+    publish(event, count: 1)
+  end
+
+  def gauge(event, value)
+    publish(event, value: Float(value))
   end
 end
