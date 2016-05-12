@@ -1,3 +1,4 @@
+require 'bernard/version'
+
 class Bernard
-  VERSION = '0.0.0'.freeze
 end
