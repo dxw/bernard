@@ -6,25 +6,34 @@ RSpec.describe Bernard do
       bernard = Bernard.new
       allow(bernard).to receive(:project_id).and_return('1234')
       allow(bernard).to receive(:write_key).and_return('WRITE_KEY')
-      stub_request(:post, 'https://api.keen.io/projects/1234/events/foo')
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/foo')
 
       bernard.publish(:foo, count: 1)
 
-      expect(WebMock).to have_requested(:post, 'https://api.keen.io/projects/1234/events/foo')
+      expect(WebMock).to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/foo')
     end
 
     it 'sets the correct HTTP headers on the request' do
       bernard = Bernard.new
       allow(bernard).to receive(:project_id).and_return('1234')
       allow(bernard).to receive(:write_key).and_return('WRITE_KEY')
-      stub_request(:post, 'https://api.keen.io/projects/1234/events/bar')
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/bar')
 
       bernard.publish(:bar, count: 1)
 
       expect(WebMock)
-        .to have_requested(:post, 'https://api.keen.io/projects/1234/events/bar')
+        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/bar')
         .with(headers: { 'Content-Type' => 'application/json',
                          'Authorization' => 'WRITE_KEY' })
+    end
+
+    it 'fails silently if a timeout occurs during POST' do
+      bernard = Bernard.new
+      allow(bernard).to receive(:project_id).and_return('1234')
+      allow(bernard).to receive(:write_key).and_return('WRITE_KEY')
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/foo').to_timeout
+
+      expect { bernard.publish(:foo, count: 1) }.to_not raise_error
     end
   end
 

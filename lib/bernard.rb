@@ -7,7 +7,7 @@ require 'net/https'
 require 'uri'
 
 class Bernard
-  BASE_URI = 'https://api.keen.io/3.0'
+  BASE_URI = 'https://api.keen.io'
 
   attr_reader :project_id, :write_key
 
@@ -35,12 +35,17 @@ class Bernard
     http.read_timeout = 5
     http.use_ssl = true
 
-    request = Net::HTTP::Post.new("/projects/#{project_id}/events/#{schema}")
+    request = Net::HTTP::Post.new("/3.0/projects/#{project_id}/events/#{schema}")
     request['Authorization'] = write_key
     request['Content-Type'] = 'application/json'
     request.body = metadata.to_json
 
-    response = http.request(request)
-    response.code == '200'
+    begin
+      response = http.request(request)
+    rescue Timeout::Error
+      return false
+    end
+
+    response.code == '201'
   end
 end
