@@ -1,3 +1,3 @@
-class Bernard
-  VERSION = '0.1.0'.freeze
+module Bernard
+  VERSION = '0.2.0'.freeze
 end
