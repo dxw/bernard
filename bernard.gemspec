@@ -5,7 +5,7 @@ require 'bernard/version'
 Gem::Specification.new do |gem|
   gem.name          = 'bernard'
   gem.version       = Bernard::VERSION
-  gem.date          = '2016-05-11'
+  gem.date          = '2016-05-17'
   gem.summary       = 'Sends event data to visualisation services'
   gem.description   = 'Sends event data to visualisation services.'
   gem.authors       = ['Tom Hipkin', 'Robert Lee-Cann']

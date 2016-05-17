@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bernard (0.0.0)
+    bernard (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -43,10 +43,10 @@ PLATFORMS
 
 DEPENDENCIES
   bernard!
-  pry
-  rake
-  rspec
-  webmock
+  pry (= 0.10.3)
+  rake (= 11.1.2)
+  rspec (= 3.4.0)
+  webmock (= 1.24.2)
 
 BUNDLED WITH
-   1.12.2
+   1.12.3

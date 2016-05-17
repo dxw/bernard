@@ -2,6 +2,7 @@ $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'bernard'
 
 require 'webmock/rspec'
+require 'pry'
 WebMock.disable_net_connect!
 
 RSpec.configure do |config|
@@ -19,4 +20,7 @@ RSpec.configure do |config|
 
   config.order = :random
   Kernel.srand config.seed
+
+  config.filter_run focus: true
+  config.run_all_when_everything_filtered = true
 end
