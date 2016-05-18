@@ -9,7 +9,7 @@ Sends event data to visualisation services.
 
 Add this line to your application's Gemfile:
 ```ruby
-gem 'bernard', '~> 0.2.0'
+gem 'bernard', '~> 0.3.0'
 ```
 
 And then execute:
@@ -51,6 +51,13 @@ client = Bernard::Keen::Client.new(
 Increment an event that has occurred by 1.
 ```ruby
 client.tick('foo')
+```
+
+### Count
+
+Increment an event that has occurred by 1.
+```ruby
+client.count('visitors', '10')
 ```
 
 ### Gauge

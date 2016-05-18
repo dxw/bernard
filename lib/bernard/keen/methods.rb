@@ -5,6 +5,10 @@ module Bernard
         write(:tick, type: event, count: 1)
       end
 
+      def count(event, value)
+        write(:count, type: event, count: Integer(value))
+      end
+
       def gauge(event, value)
         write(:gauge, type: event, value: Float(value))
       end

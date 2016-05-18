@@ -18,6 +18,22 @@ RSpec.describe Bernard::Keen::Methods do
     end
   end
 
+  describe '#count' do
+    it 'writes a simple event into Keen' do
+      client = Bernard::Keen::Client.new(
+        uri: URI('http://test.local'),
+        project_id: '1234'
+      )
+      stub_request(:post, 'https://test.local:80/3.0/projects/1234/events/count')
+
+      client.count(:visitors, 10)
+
+      expect(WebMock)
+        .to have_requested(:post, 'https://test.local:80/3.0/projects/1234/events/count')
+        .with(body: { type: 'visitors', count: 10 })
+    end
+  end
+
   describe '#gauge' do
     it 'writes a simple gauge event into Keen' do
       client = Bernard::Keen::Client.new(
