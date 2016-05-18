@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ['Tom Hipkin', 'Robert Lee-Cann']
   gem.email         = ['tomh@dxw.com', 'leeky@dxw.com']
   gem.files         = ['lib/bernard.rb']
-  gem.homepage      = 'http://rubygems.org/gems/bernard'
+  gem.homepage      = 'https://github.com/dxw/bernard'
   gem.license       = 'MIT'
 
   gem.require_paths = ['lib']
