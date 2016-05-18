@@ -12,7 +12,7 @@ Currently supporting:
 
 Add this line to your application's Gemfile:
 ```ruby
-gem 'bernard', '~> 0.3.0'
+gem 'bernard', '~> 0.4.0'
 ```
 
 And then execute:
@@ -28,6 +28,7 @@ Create a new initializer `config/bernard.rb` in your application
 Bernard::Keen::Client.configure do |client|
   client.config = {
     uri: URI('https://api.keen.io'),
+    application_name: '<YOUR APPLICATION NAME>',
     project_id: '<YOUR PROJECT ID>',
     write_key: '<YOUR WRITE KEY>',
     read_key: '<YOUR READ KEY>'
@@ -67,6 +68,7 @@ Instead of using an initializer you could create a new client on the fly:
 ```ruby
 client = Bernard::Keen::Client.new(
   uri: URI('https://api.keen.io')
+  application_name: '<YOUR APPLICATION NAME>'
   project_id: '<YOUR PROJECT ID>'
   write_key: '<YOUR WRITE KEY>'
   ready_key: '<YOUR READ KEY>'

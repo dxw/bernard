@@ -14,6 +14,7 @@ module Bernard
         def config=(args)
           @config = {
             uri: args[:uri],
+            application_name: args[:application_name],
             project_id: args[:project_id],
             write_key: args[:write_key],
             read_key: args[:read_key]
@@ -23,12 +24,13 @@ module Bernard
 
       include Bernard::Keen::Methods
 
-      attr_reader :uri, :project_id, :write_key, :read_key
+      attr_reader :uri, :application_name, :project_id, :write_key, :read_key
 
       def initialize(args = {})
         config = config_from(args)
 
         @uri = config.fetch(:uri, nil)
+        @application_name = config.fetch(:application_name, nil)
         @project_id = config.fetch(:project_id, nil)
         @write_key = config.fetch(:write_key, nil)
         @read_key = config.fetch(:read_key, nil)
@@ -48,6 +50,11 @@ module Bernard
         raise(Bernard::ArgumentError, 'Missing URI') unless value
         raise(Bernard::ArgumentError, 'Invalid URI') unless value.kind_of?(URI)
         @uri = value
+      end
+
+      def application_name=(value)
+        raise(Bernard::ArgumentError, 'Missing application_name') unless value
+        @application_name = value
       end
 
       def project_id=(value)

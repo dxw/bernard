@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    bernard (0.3.0)
+    bernard (0.4.0)
 
 GEM
   remote: https://rubygems.org/
@@ -33,7 +33,7 @@ GEM
     rspec-support (3.4.1)
     safe_yaml (1.0.4)
     slop (3.6.0)
-    webmock (1.24.2)
+    webmock (1.24.6)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
