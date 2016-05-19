@@ -12,7 +12,7 @@ Currently supporting:
 
 Add this line to your application's Gemfile:
 ```ruby
-gem 'bernard', '~> 0.4.0'
+gem 'bernard', '~> 1.0.0'
 ```
 
 And then execute:
