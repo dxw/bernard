@@ -34,16 +34,6 @@ module Bernard
         @read_key = config.fetch(:read_key, nil)
       end
 
-      private def config_from(args)
-        if !args.empty?
-          args
-        elsif Bernard::Keen::Client.config
-          Bernard::Keen::Client.config
-        else
-          {}
-        end
-      end
-
       def uri
         @uri ||= URI('https://api.keen.io')
       end
@@ -65,6 +55,20 @@ module Bernard
 
       def read_key=(value)
         @read_key = value
+      end
+
+      def connection
+        Bernard::Connection.new(client: self)
+      end
+
+      private def config_from(args)
+        if !args.empty?
+          args
+        elsif Bernard::Keen::Client.config
+          Bernard::Keen::Client.config
+        else
+          {}
+        end
       end
     end
   end
