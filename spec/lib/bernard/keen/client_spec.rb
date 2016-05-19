@@ -4,7 +4,6 @@ RSpec.describe Bernard::Keen::Client do
   before do
     Bernard::Keen::Client.configure do |client|
       client.config = {
-        uri: nil,
         application_name: nil,
         project_id: nil,
         write_key: nil,
@@ -14,18 +13,14 @@ RSpec.describe Bernard::Keen::Client do
   end
 
   describe '.initialize' do
-    let(:uri) { URI('foo') }
-
     it 'sets the values provided' do
       client = Bernard::Keen::Client.new(
-        uri: uri,
         application_name: 'demo',
         project_id: 'bar',
         write_key: 'baz',
         read_key: 'boo'
       )
 
-      expect(client.uri).to eq(uri)
       expect(client.application_name).to eq('demo')
       expect(client.project_id).to eq('bar')
       expect(client.write_key).to eq('baz')
@@ -36,7 +31,6 @@ RSpec.describe Bernard::Keen::Client do
       it 'sets those values' do
         Bernard::Keen::Client.configure do |client|
           client.config = {
-            uri: uri,
             application_name: 'green',
             project_id: 'red',
             write_key: 'blue',
@@ -46,7 +40,6 @@ RSpec.describe Bernard::Keen::Client do
 
         client = Bernard::Keen::Client.new
 
-        expect(client.uri).to eq(uri)
         expect(client.application_name).to eq('green')
         expect(client.project_id).to eq('red')
         expect(client.write_key).to eq('blue')
@@ -55,21 +48,10 @@ RSpec.describe Bernard::Keen::Client do
     end
   end
 
-  describe '#uri=' do
-    context 'when the value is not a URI' do
-      it 'raises an error' do
-        client = Bernard::Keen::Client.new
-        expect{ client.uri = 'foobar' }
-          .to raise_error(Bernard::ArgumentError, 'Invalid URI')
-      end
-    end
-
-    context 'when no value is received' do
-      it 'raises an error' do
-        client = Bernard::Keen::Client.new
-        expect{ client.uri = nil }
-          .to raise_error(Bernard::ArgumentError, 'Missing URI')
-      end
+  describe '#uri' do
+    it 'returns Keens API endpoint as a URI' do
+      client = Bernard::Keen::Client.new
+      expect(client.uri).to eq(URI('https://api.keen.io'))
     end
   end
 

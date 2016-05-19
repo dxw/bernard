@@ -25,7 +25,6 @@ $ bundle
 Create a new client on the fly:
 ```ruby
 client = Bernard::Keen::Client.new(
-  uri: URI('https://api.keen.io')
   application_name: '<YOUR APPLICATION NAME>'
   project_id: '<YOUR PROJECT ID>'
   write_key: '<YOUR WRITE KEY>'
@@ -65,7 +64,6 @@ Create a new initializer `config/bernard.rb` in your application
 ```ruby
 Bernard::Keen::Client.configure do |client|
   client.config = {
-    uri: URI('https://api.keen.io'),
     application_name: '<YOUR APPLICATION NAME>',
     project_id: '<YOUR PROJECT ID>',
     write_key: '<YOUR WRITE KEY>',
