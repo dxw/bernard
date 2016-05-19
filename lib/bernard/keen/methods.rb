@@ -13,6 +13,10 @@ module Bernard
         write(:gauge, type: event, value: Float(value))
       end
 
+      def splat(event, hash)
+        write(:splat, type: event, value: hash)
+      end
+
       private def write(event, metadata)
         event = String(event).downcase
         payload = metadata.merge!(default_params).to_json

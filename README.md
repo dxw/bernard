@@ -12,7 +12,7 @@ Currently supporting:
 
 Add this line to your application's Gemfile:
 ```ruby
-gem 'bernard', '~> 1.0.0'
+gem 'bernard', '~> 1.1.0'
 ```
 
 And then execute:
@@ -55,6 +55,12 @@ Update an event to a new value.
 client.gauge('office_noise_level', '43')
 ```
 
+### Splat
+
+Update an event to a new value.
+```ruby
+client.splat('languages', value: { english: 2, italian: 3 })
+```
 ---
 
 ## Advanced configuration

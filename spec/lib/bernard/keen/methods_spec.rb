@@ -45,4 +45,16 @@ RSpec.describe Bernard::Keen::Methods do
         .with(body: { application_name: 'demo', type: 'room_temperature', value: 42.1 })
     end
   end
+
+  describe '#splat' do
+    it 'writes a simple splat event into Keen' do
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/splat')
+
+      client.splat(:languages, { foo: 20, bar: 'baz' })
+
+      expect(WebMock)
+        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/splat')
+        .with(body: { application_name: 'demo', type: 'languages', value: { foo: 20, bar: 'baz' } })
+    end
+  end
 end
