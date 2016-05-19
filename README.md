@@ -21,19 +21,16 @@ $ bundle
 ```
 
 ## Basic setup
-To use Bernard you can either create an initializer or construct it as you need it.
 
-Create a new initializer `config/bernard.rb` in your application
+Create a new client on the fly:
 ```ruby
-Bernard::Keen::Client.configure do |client|
-  client.config = {
-    uri: URI('https://api.keen.io'),
-    application_name: '<YOUR APPLICATION NAME>',
-    project_id: '<YOUR PROJECT ID>',
-    write_key: '<YOUR WRITE KEY>',
-    read_key: '<YOUR READ KEY>'
-  }
-end
+client = Bernard::Keen::Client.new(
+  uri: URI('https://api.keen.io')
+  application_name: '<YOUR APPLICATION NAME>'
+  project_id: '<YOUR PROJECT ID>'
+  write_key: '<YOUR WRITE KEY>'
+  ready_key: '<YOUR READ KEY>'
+)
 ```
 
 ## Usage
@@ -47,9 +44,9 @@ client.tick('foo')
 
 ### Count
 
-Increment an event that has occurred by 1.
+Increment an event that has occurred by 5.
 ```ruby
-client.count('visitors', '10')
+client.count('visitors', '5')
 ```
 
 ### Gauge
@@ -63,16 +60,18 @@ client.gauge('office_noise_level', '43')
 
 ## Advanced configuration
 
-### Easier way to make a client
-Instead of using an initializer you could create a new client on the fly:
+### Initializer
+Create a new initializer `config/bernard.rb` in your application
 ```ruby
-client = Bernard::Keen::Client.new(
-  uri: URI('https://api.keen.io')
-  application_name: '<YOUR APPLICATION NAME>'
-  project_id: '<YOUR PROJECT ID>'
-  write_key: '<YOUR WRITE KEY>'
-  ready_key: '<YOUR READ KEY>'
-)
+Bernard::Keen::Client.configure do |client|
+  client.config = {
+    uri: URI('https://api.keen.io'),
+    application_name: '<YOUR APPLICATION NAME>',
+    project_id: '<YOUR PROJECT ID>',
+    write_key: '<YOUR WRITE KEY>',
+    read_key: '<YOUR READ KEY>'
+  }
+end
 ```
 
 ### Run asynchronously
