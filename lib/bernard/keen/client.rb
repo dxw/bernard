@@ -4,6 +4,11 @@ require 'bernard/keen/methods'
 module Bernard
   module Keen
     class Client
+
+      protected def api_version
+        '3.0'
+      end
+
       class << self
         attr_reader :config
 

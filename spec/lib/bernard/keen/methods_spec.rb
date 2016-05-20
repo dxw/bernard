@@ -48,13 +48,13 @@ RSpec.describe Bernard::Keen::Methods do
 
   describe '#splat' do
     it 'writes a simple splat event into Keen' do
-      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events/splat')
+      stub_request(:post, 'https://api.keen.io/3.0/projects/1234/events')
 
-      client.splat(:languages, { foo: 20, bar: 'baz' })
+      client.splat([{ value: { foo: 20, bar: 'baz' }, type: 'bar', application_name: 'demo'} ])
 
       expect(WebMock)
-        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events/splat')
-        .with(body: { application_name: 'demo', type: 'languages', value: { foo: 20, bar: 'baz' } })
+        .to have_requested(:post, 'https://api.keen.io/3.0/projects/1234/events')
+        .with(body: { splat: [ { value: { foo: 20, bar: 'baz' }, type: 'bar', application_name: 'demo' } ] })
     end
   end
 end
