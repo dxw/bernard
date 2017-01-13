@@ -3,6 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'bernard/version'
 
 Gem::Specification.new do |gem|
+
   gem.name          = 'bernard'
   gem.version       = Bernard::VERSION
   gem.date          = '2016-05-18'
@@ -21,4 +22,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec', '~> 3.4'
   gem.add_development_dependency 'pry', '~> 0.10'
   gem.add_development_dependency 'webmock', '~> 1.24'
+
 end
